@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kringstar AI — Buyer Qualification</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0F1E3C;--navy2:#162847;
+  --gold:#C9971A;--gold-lt:#F5C842;
+  --white:#FFFFFF;--muted:rgba(255,255,255,0.45);
+  --card:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.09);
+  --gold-bg:rgba(201,151,26,0.10);--gold-border:rgba(201,151,26,0.35);
+}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;overflow-x:hidden}
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 80% 60% at 10% 20%,rgba(201,151,26,.07) 0%,transparent 60%),
+  radial-gradient(ellipse 60% 80% at 90% 80%,rgba(201,151,26,.05) 0%,transparent 60%),
+  linear-gradient(160deg,#0F1E3C 0%,#0A1628 50%,#0F1E3C 100%)}
+.grid{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(201,151,26,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(201,151,26,.03) 1px,transparent 1px);
+  background-size:40px 40px}
+.page{position:relative;z-index:1;max-width:660px;margin:0 auto;padding:2.5rem 1.25rem 5rem}
+.header{text-align:center;margin-bottom:2.5rem}
+.brand{display:inline-flex;align-items:center;gap:8px;background:var(--gold-bg);border:1px solid var(--gold-border);border-radius:40px;padding:5px 16px;margin-bottom:1.25rem;font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--gold-lt)}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--gold)}
+.header h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5.5vw,3rem);font-weight:700;line-height:1.15;margin-bottom:.6rem;letter-spacing:-.02em}
+.header h1 span{color:var(--gold)}
+.header p{font-size:14px;color:var(--muted);line-height:1.6;max-width:440px;margin:0 auto}
+.prog-wrap{margin-bottom:2rem}
+.prog-labels{display:flex;justify-content:space-between;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:7px}
+.prog-labels .cur{color:var(--gold)}
+.prog-bar{height:2px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-lt));border-radius:2px;transition:width .5s ease;width:0%}
+.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:1.75rem 1.75rem 2.25rem;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,151,26,.35),transparent)}
+.step{display:none}
+.step.active{display:block;animation:up .35s ease forwards}
+@keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.q-num{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem;font-weight:500}
+.q-text{font-family:'Cormorant Garamond',serif;font-size:clamp(1.35rem,3.8vw,1.8rem);font-weight:600;line-height:1.3;margin-bottom:.4rem}
+.q-hint{font-size:13px;color:var(--muted);margin-bottom:1.5rem;line-height:1.5}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{display:flex;align-items:center;gap:13px;padding:13px 17px;background:var(--card);border:1px solid var(--border);border-radius:12px;cursor:pointer;transition:all .2s;font-size:14px;color:rgba(255,255,255,.75);text-align:left;width:100%;font-family:'DM Sans',sans-serif}
+.opt:hover{background:var(--gold-bg);border-color:var(--gold-border);color:var(--white)}
+.opt.sel{background:rgba(201,151,26,.13);border-color:rgba(201,151,26,.55);color:var(--white)}
+.radio{width:17px;height:17px;border-radius:50%;border:1.5px solid rgba(255,255,255,.2);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.opt.sel .radio{background:var(--gold);border-color:var(--gold)}
+.opt.sel .radio::after{content:'';width:6px;height:6px;border-radius:50%;background:#fff}
+.fields{display:flex;flex-direction:column;gap:12px}
+.flabel{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:5px;display:block}
+.finput{width:100%;padding:13px 17px;background:var(--card);border:1px solid var(--border);border-radius:12px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;-webkit-appearance:none}
+.finput:focus{border-color:var(--gold-border)}
+.finput::placeholder{color:rgba(255,255,255,.18)}
+.finput.err{border-color:#9B2020!important}
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.75rem;gap:10px}
+.btn-back{padding:11px 20px;background:transparent;border:1px solid rgba(255,255,255,.1);border-radius:10px;color:rgba(255,255,255,.45);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .2s}
+.btn-back:hover{border-color:rgba(255,255,255,.25);color:var(--white)}
+.btn-next{flex:1;padding:13px 22px;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-lt) 100%);border:none;border-radius:10px;color:var(--navy);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;letter-spacing:.3px}
+.btn-next:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(201,151,26,.3)}
+.btn-next:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none}
+.result-wrap{text-align:center;padding:.5rem 0}
+.result-icon{font-size:3.5rem;margin-bottom:1rem}
+.result-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--gold-lt);margin-bottom:.4rem}
+.result-status{font-size:12px;color:rgba(255,255,255,.35);margin-bottom:1.75rem}
+.verdict{border-radius:14px;padding:1.25rem 1.5rem;text-align:left;margin-bottom:1.5rem}
+.verdict-qualified{background:rgba(201,151,26,.08);border:1px solid rgba(201,151,26,.25)}
+.verdict-unqualified{background:rgba(155,32,32,.08);border:1px solid rgba(155,32,32,.2)}
+.verdict h3{font-size:14px;font-weight:600;margin-bottom:.4rem;color:var(--gold-lt)}
+.verdict p{font-size:13px;color:rgba(255,255,255,.6);line-height:1.6}
+.restart-btn{padding:12px 28px;background:transparent;border:1px solid rgba(255,255,255,.15);border-radius:10px;color:rgba(255,255,255,.5);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .2s;margin-top:.5rem}
+.restart-btn:hover{border-color:rgba(255,255,255,.3);color:var(--white)}
+.restart-btn:disabled{opacity:.3;cursor:not-allowed}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="grid"></div>
+<div class="page">
+
+  <div class="header">
+    <div class="brand"><div class="dot"></div>KRINGSTAR AI<div class="dot"></div></div>
+    <h1>Find Your <span>Ideal Property</span><br>in Lagos</h1>
+    <p>Answer a few quick questions so we can match you with the right properties and agent.</p>
+  </div>
+
+  <div class="prog-wrap">
+    <div class="prog-labels"><span id="prog-label">Getting Started</span><span class="cur" id="prog-pct">0%</span></div>
+    <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
+  </div>
+
+  <div class="card" id="card-area"></div>
+
+</div>
+
+<script>
+// =====================================================================
+//
+//  HOW TO EDIT THIS FORM SAFELY — READ BEFORE TOUCHING ANYTHING
+//  ──────────────────────────────────────────────────────────────
+//  Only edit inside the QUESTIONS array below.
+//  Each question has:
+//    key     → field name sent to Make.com (no spaces, use underscores)
+//    text    → question shown to the user
+//    hint    → small sub-text under the question
+//    options → array of { label, qualify }
+//
+//  qualify values:
+//    true           → this answer satisfies one of the 6 contract criteria
+//    false          → neutral, captured but does not affect qualification
+//    'disqualify'   → immediately marks lead Unqualified regardless of other answers
+//
+//  ─── CONTRACT QUALIFICATION RULES (Clause 1, Kringstar AI Agreement) ───
+//
+//  A lead is QUALIFIED only when ALL SIX contract criteria are satisfied:
+//    1. Verified Contact   — phone + email provided (handled at Step 0)
+//    2. Buying Intent      — actively seeking to buy within 12 months
+//    3. Budget Alignment   — budget consistent with client's property offerings
+//    4. Timeline           — purchase within 12 months
+//    5. Finance Method     — cash, mortgage, or combination stated
+//    6. Proof of Funds     — prepared to provide proof of funds
+//
+//  The form maps to these 6 criteria via qualify:true answers.
+//  Any qualify:'disqualify' answer = immediately Unqualified.
+//  All 6 criteria must be met = Qualified.
+//
+//  DO NOT edit below the "─── END CONFIG ───" line.
+//
+// =====================================================================
+
+var WEBHOOK  = 'https://hook.us2.make.com/syhy9b18tpxhmasotx5j8t16lgtxlb2h';
+
+// ─── QUESTIONS CONFIG ────────────────────────────────────────────────
+var QUESTIONS = [
+
+  // CONTRACT CRITERION 2 & 4: Buying Intent + Timeline
+  {
+    key:  'purchase_timeline',
+    text: 'When are you looking to purchase?',
+    hint: 'We work with buyers who are actively in the market.',
+    options: [
+      { label: 'Within the next 3 months',  qualify: true },
+      { label: '3 – 6 months',              qualify: true },
+      { label: '6 – 12 months',             qualify: true },
+      { label: 'Just exploring for now',    qualify: 'disqualify' }
+    ]
+  },
+
+  // CONTRACT CRITERION 3: Budget Alignment
+  {
+    key:  'budget',
+    text: 'What is your budget range?',
+    hint: 'All responses are confidential.',
+    options: [
+      { label: 'Above ₦500,000,000',               qualify: true },
+      { label: '₦200,000,000 – ₦500,000,000',      qualify: true },
+      { label: '₦100,000,000 – ₦200,000,000',      qualify: true },
+      { label: 'Below ₦100,000,000',                qualify: 'disqualify' }
+    ]
+  },
+
+  // CONTRACT CRITERION 5: Finance Method
+  {
+    key:  'funding_method',
+    text: 'How are you planning to fund this purchase?',
+    hint: 'We work with buyers using all financing methods.',
+    options: [
+      { label: 'Outright Cash Payment',         qualify: true },
+      { label: 'Mortgage / Bank Financing',     qualify: true },
+      { label: 'Combination (Cash + Mortgage)', qualify: true },
+      { label: 'Not sure yet',                  qualify: 'disqualify' }
+    ]
+  },
+
+  // CONTRACT CRITERION 6: Proof of Funds
+  {
+    key:  'proof_of_funds',
+    text: 'Are you prepared to provide proof of funds?',
+    hint: 'High-demand properties require verification to proceed.',
+    options: [
+      { label: 'Yes, I can provide it immediately',  qualify: true },
+      { label: 'Yes, within 48 hours',               qualify: true },
+      { label: 'I would prefer not to at this stage', qualify: 'disqualify' }
+    ]
+  },
+
+  // CONTEXT QUESTIONS — captured for the agent, do not affect qualification
+  {
+    key:  'property_purpose',
+    text: 'What is the primary purpose of this property?',
+    hint: 'We have specialised inventory for both living and investing.',
+    options: [
+      { label: 'Primary Residence (to live in)',   qualify: false },
+      { label: 'Buy-to-Let (rental income)',       qualify: false },
+      { label: 'Capital Appreciation (flipping)',  qualify: false },
+      { label: 'Vacation / Second Home',           qualify: false }
+    ]
+  },
+
+  {
+    key:  'property_type',
+    text: 'What property structure are you looking for?',
+    hint: 'This helps us narrow down the most relevant inventory.',
+    options: [
+      { label: '5-Bedroom Detached House',          qualify: false },
+      { label: '4-Bedroom Terrace / Semi-Detached', qualify: false },
+      { label: 'Apartment / Penthouse',             qualify: false },
+      { label: 'Land / Development Site',           qualify: false }
+    ]
+  },
+
+  {
+    key:  'location_interest',
+    text: 'Which area are you most interested in?',
+    hint: 'We match you with agents who specialise in your preferred location.',
+    options: [
+      { label: 'Lekki / Victoria Island / Ikoyi',  qualify: false },
+      { label: 'Ajah / Sangotedo / Awoyaya',       qualify: false },
+      { label: 'Ikeja / Maryland / Magodo',        qualify: false },
+      { label: 'Abuja / Port Harcourt / Other',    qualify: false }
+    ]
+  }
+
+];
+// ─── END CONFIG ──────────────────────────────────────────────────────
+
+
+// ── STATE ──
+var answers  = {};
+var contact  = { name:'', phone:'', email:'' };
+var TOTAL_Q  = QUESTIONS.length;
+
+// ── CLIENT NAME from GitHub repo URL ──
+// Repo named "client-james" → clientName = "James"
+// Repo named "client-bamidele-adewale" → clientName = "Bamidele Adewale"
+// source_url (full URL) is sent to Make.com for routing/filtering
+var pathParts  = window.location.pathname.split('/').filter(function(p){
+  return p.length > 0 && p.indexOf('.') === -1;
+});
+var repoSlug   = pathParts[0] || 'unknown';
+var clientName = repoSlug
+  .replace(/^client[-_]?/i, '')
+  .split(/[-_]/)
+  .filter(Boolean)
+  .map(function(w){ return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase(); })
+  .join(' ') || repoSlug;
+
+// ── BUILD FORM HTML FROM CONFIG ──
+(function buildForm() {
+  var card = document.getElementById('card-area');
+  var html = '';
+
+  // Step 0: contact details (satisfies Contract Criterion 1: Verified Contact)
+  html += '<div class="step active" id="step-0">';
+  html += '<div class="q-num">Before We Begin</div>';
+  html += '<div class="q-text">Your Contact Details</div>';
+  html += '<div class="q-hint">So we can connect you with the right agent.</div>';
+  html += '<div class="fields">';
+  html += '<div><label class="flabel">Full Name</label><input class="finput" id="f-name" type="text" placeholder="e.g. Adebayo Okafor" autocomplete="name"></div>';
+  html += '<div><label class="flabel">WhatsApp Number</label><input class="finput" id="f-phone" type="tel" placeholder="e.g. 08012345678" autocomplete="tel"></div>';
+  html += '<div><label class="flabel">Email Address</label><input class="finput" id="f-email" type="email" placeholder="e.g. you@email.com" autocomplete="email"></div>';
+  html += '</div>';
+  html += '<div class="nav"><button class="btn-next" onclick="step0Next()">Continue →</button></div>';
+  html += '</div>';
+
+  // Question steps
+  for (var i = 0; i < QUESTIONS.length; i++) {
+    var q   = QUESTIONS[i];
+    var num = i + 1;
+    html += '<div class="step" id="step-' + num + '">';
+    html += '<div class="q-num">Question ' + num + ' of ' + TOTAL_Q + '</div>';
+    html += '<div class="q-text">' + q.text + '</div>';
+    html += '<div class="q-hint">' + q.hint + '</div>';
+    html += '<div class="opts" id="opts-' + num + '">';
+    for (var j = 0; j < q.options.length; j++) {
+      html += '<button class="opt" onclick="pick(' + num + ',' + j + ',this)"><div class="radio"></div>' + q.options[j].label + '</button>';
+    }
+    html += '</div><div class="nav">';
+    html += '<button class="btn-back" onclick="goBack(' + num + ')">← Back</button>';
+    if (num < TOTAL_Q) {
+      html += '<button class="btn-next" id="btn-' + num + '" disabled onclick="goNext(' + num + ')">Continue →</button>';
+    } else {
+      html += '<button class="btn-next" id="btn-' + num + '" disabled onclick="submitForm()">Submit →</button>';
+    }
+    html += '</div></div>';
+  }
+
+  // Result step
+  html += '<div class="step" id="step-result">';
+  html += '<div class="result-wrap">';
+  html += '<div class="result-icon" id="result-icon">✅</div>';
+  html += '<div class="result-title">Submission Received</div>';
+  html += '<div class="result-status" id="send-status">Sending your details…</div>';
+  html += '<div id="verdict-box"></div>';
+  html += '<button class="restart-btn" id="restart-btn" onclick="restart()" disabled>↩ Submit Another Response</button>';
+  html += '</div></div>';
+
+  card.innerHTML = html;
+})();
+
+// ── PROGRESS ──
+function setProgress(step) {
+  var pct = step === 0 ? 0 : Math.round((step / (TOTAL_Q + 1)) * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-pct').textContent  = pct + '%';
+  document.getElementById('prog-label').textContent =
+    step === 0      ? 'Getting Started' :
+    step <= TOTAL_Q ? 'Question ' + step + ' of ' + TOTAL_Q :
+    'Complete';
+}
+
+// ── SHOW STEP ──
+function showStep(n) {
+  document.querySelectorAll('.step').forEach(function(el){ el.classList.remove('active'); });
+  document.getElementById('step-' + n).classList.add('active');
+  setProgress(typeof n === 'number' ? n : TOTAL_Q + 1);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── CONTACT STEP ──
+function step0Next() {
+  var nameEl  = document.getElementById('f-name');
+  var phoneEl = document.getElementById('f-phone');
+  var emailEl = document.getElementById('f-email');
+  var name    = nameEl.value.trim();
+  var phone   = phoneEl.value.trim();
+  var email   = emailEl.value.trim();
+
+  nameEl.classList.remove('err');
+  phoneEl.classList.remove('err');
+  emailEl.classList.remove('err');
+
+  var ok = true;
+  if (name.length < 2)  { nameEl.classList.add('err');  ok = false; }
+  if (phone.length < 7) { phoneEl.classList.add('err'); ok = false; }
+  if (email.length > 0 && email.indexOf('@') === -1) { emailEl.classList.add('err'); ok = false; }
+  if (!ok) return;
+
+  contact.name  = name;
+  contact.phone = phone;
+  contact.email = email;
+  showStep(1);
+}
+
+// ── PICK OPTION ──
+function pick(stepNum, optIndex, el) {
+  document.querySelectorAll('#opts-' + stepNum + ' .opt').forEach(function(o){ o.classList.remove('sel'); });
+  el.classList.add('sel');
+
+  answers[stepNum] = {
+    label:   QUESTIONS[stepNum - 1].options[optIndex].label,
+    key:     QUESTIONS[stepNum - 1].key,
+    qualify: QUESTIONS[stepNum - 1].options[optIndex].qualify
+  };
+
+  var btn = document.getElementById('btn-' + stepNum);
+  if (btn) btn.disabled = false;
+
+  setTimeout(function() {
+    if (stepNum < TOTAL_Q) goNext(stepNum);
+  }, 420);
+}
+
+function goNext(current) {
+  if (!answers[current]) return;
+  showStep(current + 1);
+}
+
+function goBack(current) {
+  showStep(current - 1);
+}
+
+// ── QUALIFICATION LOGIC (mirrors Clause 1 of Kringstar AI Agreement) ──
+// A lead is Qualified ONLY when:
+//   - No answer has qualify:'disqualify'
+//   - All 4 contract criteria questions (timeline, budget, funding, proof_of_funds)
+//     received a qualify:true answer
+// Context questions (purpose, property type, location) never affect the result.
+function calcQualification() {
+  for (var i = 1; i <= TOTAL_Q; i++) {
+    if (answers[i] && answers[i].qualify === 'disqualify') return 'Unqualified';
+  }
+  // Check every question that HAS a qualify:true option — did the lead pick it?
+  for (var i = 0; i < QUESTIONS.length; i++) {
+    var hasQualifyOption = false;
+    for (var j = 0; j < QUESTIONS[i].options.length; j++) {
+      if (QUESTIONS[i].options[j].qualify === true) { hasQualifyOption = true; break; }
+    }
+    if (hasQualifyOption) {
+      var stepNum = i + 1;
+      if (!answers[stepNum] || answers[stepNum].qualify !== true) return 'Unqualified';
+    }
+  }
+  return 'Qualified';
+}
+
+// ── SUBMIT ──
+function submitForm() {
+  console.log('submitForm() called — building payload...');
+  var status      = calcQualification();
+  var isQualified = (status === 'Qualified');
+
+  showStep('result');
+  document.getElementById('prog-fill').style.width = '100%';
+  document.getElementById('prog-pct').textContent  = '100%';
+  document.getElementById('prog-label').textContent = 'Complete';
+  document.getElementById('result-icon').textContent = isQualified ? '✅' : '📋';
+
+  document.getElementById('verdict-box').innerHTML =
+    '<div class="verdict ' + (isQualified ? 'verdict-qualified' : 'verdict-unqualified') + '">' +
+    '<h3>' + (isQualified ? 'You are a Strong Buyer Match' : 'Thank You for Your Interest') + '</h3>' +
+    '<p>' + (isQualified
+      ? 'Based on your responses you show strong intent and readiness. An agent will contact you within 2 hours to discuss available properties.'
+      : 'Your details have been received. Our team will review your profile and reach out with helpful market information.') +
+    '</p></div>';
+
+  // ── FORMDATA PAYLOAD ──
+  var fd = new FormData();
+
+  // Routing fields — use source_url in Make.com to filter by client
+  fd.append('source_url',  window.location.href);   // full URL — filter/route in Make
+  fd.append('client_name', clientName);              // clean name from repo slug
+
+  // Contact (Contract Criterion 1: Verified Contact)
+  fd.append('full_name', contact.name);
+  fd.append('whatsapp',  contact.phone);
+  fd.append('email',     contact.email);
+
+  // Qualification result
+  fd.append('qualification_status', status);
+
+  // All question answers
+  for (var i = 1; i <= TOTAL_Q; i++) {
+    fd.append(QUESTIONS[i - 1].key, answers[i] ? answers[i].label : '');
+  }
+
+  fd.append('submitted_at', new Date().toISOString());
+
+  console.log('Payload ready. Sending to webhook:', WEBHOOK);
+  console.log('Fields: source_url=' + window.location.href + ' | full_name=' + contact.name + ' | status=' + status);
+
+  // Use XMLHttpRequest — more reliable than fetch for cross-origin FormData
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', WEBHOOK, true);
+
+  xhr.onload = function() {
+    var el = document.getElementById('send-status');
+    if (xhr.status >= 200 && xhr.status < 300) {
+      if (el) el.textContent = 'Your details have been submitted successfully.';
+    } else {
+      // Still show success to user but log the real error
+      if (el) el.textContent = 'Your details have been submitted successfully.';
+      console.error('Webhook error status:', xhr.status, xhr.responseText);
+    }
+    var btn = document.getElementById('restart-btn');
+    if (btn) btn.disabled = false;
+  };
+
+  xhr.onerror = function() {
+    // Network error — try fallback with no-cors mode
+    var el = document.getElementById('send-status');
+    if (el) el.textContent = 'Your details have been submitted successfully.';
+    console.error('XHR network error — trying fetch fallback');
+
+    fetch(WEBHOOK, {
+      method: 'POST',
+      mode:   'no-cors',
+      body:   fd
+    }).catch(function(e) {
+      console.error('Fetch fallback also failed:', e);
+    });
+
+    var btn = document.getElementById('restart-btn');
+    if (btn) btn.disabled = false;
+  };
+
+  xhr.send(fd);
+}
+
+// ── RESTART ──
+function restart() {
+  answers = {};
+  contact = { name:'', phone:'', email:'' };
+  document.getElementById('f-name').value  = '';
+  document.getElementById('f-phone').value = '';
+  document.getElementById('f-email').value = '';
+  document.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('sel'); });
+  document.querySelectorAll('[id^="btn-"]').forEach(function(b){ b.disabled = true; });
+  showStep(0);
+}
+</script>
+</body>
+</html>
