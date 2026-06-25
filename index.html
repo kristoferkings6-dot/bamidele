@@ -439,15 +439,28 @@ function submitForm() {
   // fetch with mode:'no-cors' bypasses CORS preflight entirely.
   // The browser sends the request directly — Make receives it, we just can't read the response.
   // This is intentional and correct for a one-way webhook.
-  var params = [
-    'source_url='           + encodeURIComponent(window.location.href),
-    'client_name='          + encodeURIComponent(clientName),
-    'full_name='            + encodeURIComponent(contact.name),
-    'whatsapp='             + encodeURIComponent(contact.phone),
-    'email='                + encodeURIComponent(contact.email),
-    'qualification_status=' + encodeURIComponent(status),
-    'submitted_at='         + encodeURIComponent(new Date().toISOString())
-  ];
+  var payload = {
+    source_url:           window.location.href,
+    client_name:          clientName,
+    full_name:            contact.name,
+    whatsapp:             contact.phone,
+    email:                contact.email,
+    qualification_status: status,
+    submitted_at:         new Date().toISOString()
+  };
+  for (var i = 1; i <= TOTAL_Q; i++) {
+    payload[QUESTIONS[i-1].key] = answers[i] ? answers[i].label : '';
+  }
+  var blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+  fetch(WEBHOOK, {
+    method: 'POST',
+    mode: 'no-cors',
+    body: blob
+  }).catch(function(){});
+  var el = document.getElementById('send-status');
+  if (el) el.textContent = 'Your details have been submitted successfully.';
+  var btn = document.getElementById('restart-btn');
+  if (btn) btn.disabled = false;
   for (var i = 1; i <= TOTAL_Q; i++) {
     params.push(encodeURIComponent(QUESTIONS[i-1].key) + '=' + encodeURIComponent(answers[i] ? answers[i].label : ''));
   }
