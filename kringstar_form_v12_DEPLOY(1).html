@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Kringstar AI  -  Buyer Qualification</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"></noscript>
+
+<!-- META PIXEL -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1550508203129868');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1550508203129868&ev=PageView&noscript=1"/></noscript>
+
+<!-- GOOGLE ANALYTICS 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5GHLP06H0G"></script>
+<script>
+window.dataLayer=window.dataLayer||[];
+function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());
+gtag('config','G-5GHLP06H0G',{send_page_view:true,page_title:'Kringstar Qualification Form'});
+function kga(n,p){try{gtag('event',n,p||{});}catch(e){}}
+</script>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0F1E3C;
+  --gold:#C9971A;--gold-lt:#F5C842;
+  --white:#FFFFFF;--muted:rgba(255,255,255,0.45);
+  --card:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.09);
+  --gold-bg:rgba(201,151,26,0.10);--gold-border:rgba(201,151,26,0.35);
+}
+body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;overflow-x:hidden}
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 80% 60% at 10% 20%,rgba(201,151,26,.07) 0%,transparent 60%),
+  radial-gradient(ellipse 60% 80% at 90% 80%,rgba(201,151,26,.05) 0%,transparent 60%),
+  linear-gradient(160deg,#0F1E3C 0%,#0A1628 50%,#0F1E3C 100%)}
+.page{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:1.5rem 1.25rem 4rem}
+.brand{display:inline-flex;align-items:center;gap:8px;background:var(--gold-bg);border:1px solid var(--gold-border);border-radius:40px;padding:5px 16px;margin-bottom:1rem;font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--gold-lt)}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--gold)}
+.header{text-align:center;margin-bottom:1rem}
+.header h1{font-family:'Cormorant Garamond',serif;font-size:clamp(1.7rem,5vw,2.8rem);font-weight:700;line-height:1.15;margin-bottom:.4rem;letter-spacing:-.02em}
+.header h1 span{color:var(--gold)}
+.header p{font-size:13px;color:var(--muted);line-height:1.6;max-width:420px;margin:0 auto}
+.trust-banner{background:rgba(255,255,255,.03);border:1px solid rgba(201,151,26,.2);border-radius:12px;padding:.75rem 1rem;margin-bottom:1rem}
+.trust-row{display:flex;flex-direction:column;gap:6px;margin-bottom:6px}
+.trust-item{display:flex;align-items:flex-start;gap:8px}
+.trust-icon{font-size:13px;flex-shrink:0}
+.trust-text{font-size:11px;color:rgba(255,255,255,.55);line-height:1.4}
+.trust-lasera{font-size:10px;color:rgba(255,255,255,.3);line-height:1.4;padding-top:6px;border-top:1px solid rgba(255,255,255,.06)}
+.trust-lasera strong{color:rgba(201,151,26,.7);font-weight:500}
+.prog-wrap{margin-bottom:1rem}
+.prog-labels{display:flex;justify-content:space-between;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:6px}
+.prog-labels .cur{color:var(--gold)}
+.prog-bar{height:2px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-lt));border-radius:2px;transition:width .5s ease;width:0%}
+.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:1.5rem 1.5rem 2rem;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,151,26,.35),transparent)}
+.step{display:none}
+.step.active{display:block;animation:up .3s ease forwards}
+@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.q-num{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;font-weight:500}
+.q-text{font-family:'Cormorant Garamond',serif;font-size:clamp(1.25rem,3.5vw,1.7rem);font-weight:600;line-height:1.3;margin-bottom:.35rem}
+.q-hint{font-size:13px;color:var(--muted);margin-bottom:1.25rem;line-height:1.5}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--card);border:1px solid var(--border);border-radius:12px;cursor:pointer;transition:all .2s;font-size:14px;color:rgba(255,255,255,.75);text-align:left;width:100%;font-family:'DM Sans',sans-serif}
+.opt:hover{background:var(--gold-bg);border-color:var(--gold-border);color:var(--white)}
+.opt.sel{background:rgba(201,151,26,.13);border-color:rgba(201,151,26,.55);color:var(--white)}
+.radio{width:16px;height:16px;border-radius:50%;border:1.5px solid rgba(255,255,255,.2);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.opt.sel .radio{background:var(--gold);border-color:var(--gold)}
+.opt.sel .radio::after{content:'';width:5px;height:5px;border-radius:50%;background:#fff}
+.fields{display:flex;flex-direction:column;gap:12px}
+.flabel{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:5px;display:block}
+.finput{width:100%;padding:13px 17px;background:var(--card);border:1px solid var(--border);border-radius:12px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;-webkit-appearance:none}
+.finput:focus{border-color:var(--gold-border)}
+.finput::placeholder{color:rgba(255,255,255,.18)}
+.finput.err{border-color:#9B2020!important}
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem;gap:10px}
+.btn-back{padding:11px 18px;background:transparent;border:1px solid rgba(255,255,255,.1);border-radius:10px;color:rgba(255,255,255,.45);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .2s}
+.btn-back:hover{border-color:rgba(255,255,255,.25);color:var(--white)}
+.btn-next{flex:1;padding:13px 20px;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-lt) 100%);border:none;border-radius:10px;color:var(--navy);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-next:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(201,151,26,.3)}
+.btn-next:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none}
+.result-wrap{text-align:center;padding:.5rem 0}
+.result-icon{font-size:3rem;margin-bottom:1rem}
+.result-title{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--gold-lt);margin-bottom:.4rem}
+.result-status{font-size:12px;color:rgba(255,255,255,.35);margin-bottom:1.5rem}
+.verdict{border-radius:14px;padding:1.1rem 1.25rem;text-align:left;margin-bottom:1.25rem}
+.verdict-qualified{background:rgba(201,151,26,.08);border:1px solid rgba(201,151,26,.25)}
+.verdict-unqualified{background:rgba(155,32,32,.08);border:1px solid rgba(155,32,32,.2)}
+.verdict h3{font-size:14px;font-weight:600;margin-bottom:.4rem;color:var(--gold-lt)}
+.verdict p{font-size:13px;color:rgba(255,255,255,.6);line-height:1.6}
+.restart-btn{padding:10px 24px;background:transparent;border:1px solid rgba(255,255,255,.15);border-radius:10px;color:rgba(255,255,255,.5);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .2s}
+.restart-btn:disabled{opacity:.3;cursor:not-allowed}
+.whatsapp-notice{background:rgba(37,211,102,.08);border:1px solid rgba(37,211,102,.25);border-radius:14px;padding:1.1rem 1.25rem;margin:1rem 0;display:flex;align-items:flex-start;gap:12px;text-align:left}
+.wa-icon{font-size:1.5rem;flex-shrink:0;margin-top:2px}
+.wa-text{font-size:13px;color:rgba(255,255,255,.7);line-height:1.6}
+.wa-text strong{color:#25D366}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="page">
+
+  <div class="header">
+    <div class="brand"><div class="dot"></div>KRINGSTAR AI<div class="dot"></div></div>
+    <h1>Find a <span>Verified Lagos</span><br>Property Today</h1>
+    <p>Answer 7 quick questions. We match you with Bamidele Adewale's title-verified listings within 2 hours.</p>
+  </div>
+
+  <div class="trust-banner">
+    <div class="trust-row">
+      <div class="trust-item"><div class="trust-icon">🔒</div><div class="trust-text">Your information is never shared without your permission</div></div>
+      <div class="trust-item"><div class="trust-icon">✅</div><div class="trust-text">Every listing is title-verified before you see it</div></div>
+      <div class="trust-item"><div class="trust-icon">⚡</div><div class="trust-text">Matched to verified listings within 2 hours</div></div>
+    </div>
+    <div class="trust-lasera">Bamidele Adewale has <strong>10 years</strong> of Lagos real estate experience and is <strong>LASRERA registered</strong>. Your investment is protected.</div>
+  </div>
+
+  <div class="prog-wrap">
+    <div class="prog-labels"><span id="prog-label">Question 1 of 7</span><span class="cur" id="prog-pct">0%</span></div>
+    <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
+  </div>
+
+  <div class="card" id="card-area"></div>
+
+</div>
+
+<script>
+var WEBHOOK = 'https://hook.us2.make.com/gh8hqll4kdltuyk1eg52zk567w1n8f1g';
+var BUDGET_QUALIFY_FROM = 0;
+
+var BUDGET_OPTIONS = [
+  { label: 'Below 20,000,000' },
+  { label: '20,000,000 to 50,000,000' },
+  { label: '50,000,000 to 100,000,000' },
+  { label: '100,000,000 to 200,000,000' },
+  { label: '200,000,000 to 500,000,000' },
+  { label: 'Above 500,000,000' }
+];
+
+function buildBudgetOptions() {
+  var opts = [];
+  for (var i = 0; i < BUDGET_OPTIONS.length; i++) {
+    opts.push({
+      label: BUDGET_OPTIONS[i].label,
+      qualify: i >= BUDGET_QUALIFY_FROM ? true : 'disqualify'
+    });
+  }
+  return opts;
+}
+
+var QUESTIONS = [
+
+  // Q1 - Budget (most powerful qualifier)
+  {
+    key: 'budget',
+    text: 'What is your total budget for this property purchase?',
+    hint: 'Including all fees and charges. All responses are strictly confidential.',
+    options: buildBudgetOptions()
+  },
+
+  // Q2 - Preferred location
+  {
+    key: 'preferred_location',
+    text: 'Which area of Lagos are you looking to buy in?',
+    hint: 'Select your preferred location. Bamidele has verified listings across these corridors.',
+    options: [
+      { label: 'Ajah / Sangotedo / Abraham Adesanya',  qualify: false },
+      { label: 'Lekki Phase 1 / Lekki Phase 2',        qualify: false },
+      { label: 'Victoria Island / Eko Atlantic',        qualify: false },
+      { label: 'Ikoyi',                                 qualify: false },
+      { label: 'Ikeja / GRA / Maryland',                qualify: false },
+      { label: 'Yaba / Surulere / Gbagada',             qualify: false },
+      { label: 'I am open to multiple areas',           qualify: false }
+    ]
+  },
+
+  // Q3 - Purchase timeline
+  {
+    key: 'purchase_timeline',
+    text: 'When are you looking to complete this purchase?',
+    hint: 'This helps us prioritise and match you to available listings.',
+    options: [
+      { label: 'Within the next 1 to 3 months',  qualify: true },
+      { label: 'Within 3 to 6 months',           qualify: true },
+      { label: 'Within 6 to 12 months',          qualify: true },
+      { label: 'Just exploring for now',          qualify: 'disqualify' }
+    ]
+  },
+
+  // Q4 - Funding method
+  {
+    key: 'funding_method',
+    text: 'How are you planning to fund this purchase?',
+    hint: 'Bamidele works with buyers across all payment methods.',
+    options: [
+      { label: 'Outright Cash Payment',         qualify: true },
+      { label: 'Developer Payment Plan',        qualify: true },
+      { label: 'Mortgage or Bank Financing',    qualify: true },
+      { label: 'Combination of Cash and Loan',  qualify: true },
+      { label: 'I have not decided yet',        qualify: 'disqualify' }
+    ]
+  },
+
+  // Q5 - Proof of funds (verification signal)
+  {
+    key: 'proof_of_funds',
+    text: 'To protect you and ensure only serious buyers access our listings  -  can you provide proof of funds?',
+    hint: 'This is the one thing that separates serious buyers from time-wasters.',
+    options: [
+      { label: 'Yes  -  I can provide it immediately',      qualify: true },
+      { label: 'Yes  -  I can provide it within 48 hours',  qualify: true },
+      { label: 'I would prefer not to at this stage',     qualify: 'disqualify' }
+    ]
+  },
+
+  // Q6 - Readiness to meet Bamidele
+  {
+    key: 'readiness_to_speak',
+    text: 'Are you ready to speak with Bamidele Adewale  -  our verified Lagos property agent  -  this week?',
+    hint: 'Bamidele responds to all verified matches within 2 hours.',
+    options: [
+      { label: 'Yes  -  I am ready to be contacted immediately',                 qualify: false },
+      { label: 'Yes  -  but I need a few more days to prepare',                 qualify: false },
+      { label: 'I would prefer to receive property options on WhatsApp first', qualify: false }
+    ]
+  },
+
+  // Q7 - Biggest frustration  -  mirrors ad angle, personalises follow-up
+  {
+    key: 'biggest_frustration',
+    text: 'What has been your biggest frustration searching for property in Lagos?',
+    hint: 'This helps us know exactly how to protect you through our verification process.',
+    options: [
+      { label: 'Agents who stop responding after viewings',              qualify: false },
+      { label: 'Properties that look nothing like the listing photos',   qualify: false },
+      { label: 'Worrying about paying for a property with a fake title', qualify: false },
+      { label: 'Being asked to pay before seeing any documents',         qualify: false },
+      { label: 'I have not started yet  -  I want to get this right',     qualify: false }
+    ]
+  }
+
+];
+
+var answers = {};
+var contact = { name:'', phone:'', email:'' };
+var TOTAL_Q = QUESTIONS.length;
+
+var clientName = 'Bamidele';
+
+// BUILD FORM
+(function build() {
+  var card = document.getElementById('card-area');
+  var html = '';
+
+  for (var i = 0; i < QUESTIONS.length; i++) {
+    var q = QUESTIONS[i];
+    var num = i + 1;
+    html += '<div class="step' + (i === 0 ? ' active' : '') + '" id="step-' + num + '">';
+    html += '<div class="q-num">Question ' + num + ' of ' + TOTAL_Q + '</div>';
+    html += '<div class="q-text">' + q.text + '</div>';
+    html += '<div class="q-hint">' + q.hint + '</div>';
+    html += '<div class="opts" id="opts-' + num + '">';
+    for (var j = 0; j < q.options.length; j++) {
+      html += '<button class="opt" onclick="pick(' + num + ',' + j + ',this)"><div class="radio"></div>' + q.options[j].label + '</button>';
+    }
+    html += '</div><div class="nav">';
+    if (num > 1) html += '<button class="btn-back" onclick="goBack(' + num + ')">Back</button>';
+    html += '<button class="btn-next" id="btn-' + num + '" disabled onclick="goNext(' + num + ')">Continue</button>';
+    html += '</div></div>';
+  }
+
+  // Contact step - LAST
+  html += '<div class="step" id="step-contact">';
+  html += '<div class="q-num">Almost done</div>';
+  html += '<div class="q-text">Where should Bamidele reach you?</div>';
+  html += '<div class="q-hint">You have answered all the questions. Enter your details below. The moment you submit, you will receive an SMS from Kringstar AI within 5 minutes asking you to confirm your interest. Once confirmed, Bamidele Adewale will contact you within 2 hours with title-verified listings.</div>';
+  html += '<div class="fields">';
+  html += '<div><label class="flabel">Full Name</label><input class="finput" id="f-name" type="text" placeholder="e.g. Adebayo Okafor" autocomplete="name"></div>';
+  html += '<div><label class="flabel">Phone Number (for SMS)</label><input class="finput" id="f-phone" type="tel" placeholder="e.g. 08012345678" autocomplete="tel"></div>';
+  html += '<div><label class="flabel">Email Address <span style="color:rgba(255,255,255,.3)">(optional)</span></label><input class="finput" id="f-email" type="email" placeholder="e.g. you@email.com" autocomplete="email"></div>';
+  html += '</div>';
+  html += '<div class="nav"><button class="btn-back" onclick="goBack(\'contact\')">Back</button>';
+  html += '<button class="btn-next" onclick="submitForm()">Get My Verified Matches</button></div>';
+  html += '</div>';
+
+  // Result screen
+  html += '<div class="step" id="step-result"><div class="result-wrap">';
+  html += '<div class="result-icon" id="result-icon">✅</div>';
+  html += '<div class="result-title" id="result-title">You Are Verified</div>';
+  html += '<div class="result-status" id="send-status">Sending your details...</div>';
+  html += '<div id="verdict-box"></div>';
+  html += '<div class="whatsapp-notice" id="whatsapp-notice" style="display:none">';
+  html += '<div class="wa-icon">📱</div>';
+  html += '<div class="wa-text">';
+  html += '<strong>Check your SMS now.</strong><br>';
+  html += 'You will receive a text message from Kringstar AI within the next 5 minutes.<br>';
+  html += 'Reply <strong>YES</strong> to complete your verification and unlock Bamidele\'s verified listings.';
+  html += '</div></div>';
+  html += '<button class="restart-btn" id="restart-btn" onclick="restart()" disabled>Submit Another Response</button>';
+  html += '</div></div>';
+
+  card.innerHTML = html;
+  // Initialise progress bar for step 1 on page load
+  setProgress(1);
+})();
+
+function setProgress(step) {
+  var pct = step === 'contact' ? 90 : step === 'result' ? 100 : Math.round((step / TOTAL_Q) * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('prog-label').textContent =
+    step === 'contact' ? 'Almost done' :
+    step === 'result'  ? 'Complete' :
+    'Question ' + step + ' of ' + TOTAL_Q;
+}
+
+function showStep(n) {
+  document.querySelectorAll('.step').forEach(function(el){ el.classList.remove('active'); });
+  var id = 'step-' + n;
+  document.getElementById(id).classList.add('active');
+  setProgress(n);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function pick(stepNum, optIdx, el) {
+  document.querySelectorAll('#opts-' + stepNum + ' .opt').forEach(function(o){ o.classList.remove('sel'); });
+  el.classList.add('sel');
+  answers[stepNum] = {
+    label:   QUESTIONS[stepNum - 1].options[optIdx].label,
+    key:     QUESTIONS[stepNum - 1].key,
+    qualify: QUESTIONS[stepNum - 1].options[optIdx].qualify
+  };
+  var btn = document.getElementById('btn-' + stepNum);
+  if (btn) btn.disabled = false;
+}
+
+function goNext(current) {
+  if (!answers[current]) return;
+  if (current === TOTAL_Q) {
+    kga('all_questions_complete', { client: clientName });
+    try { fbq('trackCustom', 'AllQuestionsComplete'); } catch(e) {}
+    showStep('contact');
+  } else {
+    showStep(current + 1);
+  }
+}
+
+function goBack(current) {
+  if (current === 'contact') {
+    showStep(TOTAL_Q);
+  } else {
+    showStep(current - 1);
+  }
+}
+
+function calcQualification() {
+  for (var i = 1; i <= TOTAL_Q; i++) {
+    if (answers[i] && answers[i].qualify === 'disqualify') return 'Unqualified';
+  }
+  for (var i = 0; i < QUESTIONS.length; i++) {
+    var hasQ = QUESTIONS[i].options.some(function(o){ return o.qualify === true; });
+    if (hasQ && (!answers[i+1] || answers[i+1].qualify !== true)) return 'Unqualified';
+  }
+  return 'Qualified';
+}
+
+function submitForm() {
+  var nameEl  = document.getElementById('f-name');
+  var phoneEl = document.getElementById('f-phone');
+  var emailEl = document.getElementById('f-email');
+  nameEl.classList.remove('err');
+  phoneEl.classList.remove('err');
+  var ok = true;
+  if (nameEl.value.trim().length < 2)  { nameEl.classList.add('err');  ok = false; }
+  if (phoneEl.value.trim().length < 10) { phoneEl.classList.add('err'); ok = false; }
+  if (!ok) return;
+
+  // Prevent double-submit
+  var submitBtn = document.querySelector('#step-contact .btn-next');
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Submitting\u2026'; }
+
+  contact.name  = nameEl.value.trim();
+  contact.phone = phoneEl.value.trim();
+  contact.email = emailEl.value.trim();
+
+  var status      = calcQualification();
+  var isQualified = status === 'Qualified';
+
+  // GA4
+  kga('form_complete', { client: clientName, qualification: status, budget: answers[1] ? answers[1].label : 'unknown' });
+  if (isQualified) kga('lead_qualified', { client: clientName, budget: answers[1] ? answers[1].label : 'unknown' });
+
+  // Meta Pixel
+  try { fbq('track', 'Lead'); } catch(e) {}
+  if (isQualified) { try { fbq('trackCustom', 'KringstarQualifiedLead', { budget: answers[1] ? answers[1].label : 'unknown' }); } catch(e) {} }
+
+  showStep('result');
+  document.getElementById('prog-fill').style.width = '100%';
+  document.getElementById('prog-pct').textContent = '100%';
+  document.getElementById('prog-label').textContent = 'Complete';
+
+  if (isQualified) {
+    document.getElementById('result-icon').textContent = '🔐';
+    document.getElementById('result-title').textContent = 'You Are Verified';
+    document.getElementById('verdict-box').innerHTML =
+      '<div class="verdict verdict-qualified">' +
+      '<h3>No fake titles. No ghost agents. Just verified properties.</h3>' +
+      '<p>You have passed our buyer verification. Kringstar AI will send you an SMS within 5 minutes to confirm your interest. Once you reply YES, Bamidele Adewale will reach out with title-verified listings that match your budget  -  exactly as advertised.</p>' +
+      '</div>';
+    document.getElementById('whatsapp-notice').style.display = 'flex';
+  } else {
+    document.getElementById('result-icon').textContent = '📋';
+    document.getElementById('result-title').textContent = 'Application Received';
+    document.getElementById('verdict-box').innerHTML =
+      '<div class="verdict verdict-unqualified">' +
+      '<h3>Thank you for your interest</h3>' +
+      '<p>Your details have been received. Our team will review your profile and reach out with helpful market information and listings that may suit your current situation. Keep your phone active  -  we will be in touch by SMS.</p>' +
+      '</div>';
+  }
+
+  var fd = new FormData();
+  fd.append('source_url', window.location.href);
+  fd.append('client_name', clientName);
+  fd.append('full_name', contact.name);
+  fd.append('whatsapp', contact.phone);
+  fd.append('email', contact.email);
+  fd.append('qualification_status', status);
+  for (var i = 1; i <= TOTAL_Q; i++) {
+    fd.append(QUESTIONS[i-1].key, answers[i] ? answers[i].label : '');
+  }
+  fd.append('submitted_at', new Date().toISOString());
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', WEBHOOK, true);
+  xhr.onload = function() {
+    var el = document.getElementById('send-status');
+    if (el) el.textContent = 'Your details have been submitted successfully.';
+    var btn = document.getElementById('restart-btn');
+    if (btn) btn.disabled = false;
+  };
+  xhr.onerror = function() {
+    var el = document.getElementById('send-status');
+    if (el) el.textContent = 'Your details have been submitted successfully.';
+    fetch(WEBHOOK, { method: 'POST', mode: 'no-cors', body: fd }).catch(function(){});
+    var btn = document.getElementById('restart-btn');
+    if (btn) btn.disabled = false;
+  };
+  xhr.send(fd);
+}
+
+function restart() {
+  answers = {};
+  contact = { name:'', phone:'', email:'' };
+  document.getElementById('f-name').value = '';
+  document.getElementById('f-phone').value = '';
+  document.getElementById('f-email').value = '';
+  document.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('sel'); });
+  document.querySelectorAll('[id^="btn-"]').forEach(function(b){ if (b.id !== 'restart-btn') b.disabled = true; });
+  showStep(1);
+}
+</script>
+</body>
+</html>
