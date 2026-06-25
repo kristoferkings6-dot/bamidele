@@ -449,6 +449,24 @@ function submitForm() {
   for (var i = 1; i <= TOTAL_Q; i++) {
     payload[QUESTIONS[i-1].key] = answers[i] ? answers[i].label : '';
   }
+  var blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+  fetch(WEBHOOK, {
+  var img = new Image();
+  img.src = WEBHOOK + '?' + Object.keys(payload).map(function(k){
+    return encodeURIComponent(k) + '=' + encodeURIComponent(payload[k]);
+  }).join('&');
+  var el = document.getElementById('send-status');
+  if (el) el.textContent = 'Your details have been submitted successfully.';
+  var btn = document.getElementById('restart-btn');
+  if (btn) btn.disabled = false;
+  var el = document.getElementById('send-status');
+  if (el) el.textContent = 'Your details have been submitted successfully.';
+  var btn = document.getElementById('restart-btn');
+  if (btn) btn.disabled = false;
+  };
+  for (var i = 1; i <= TOTAL_Q; i++) {
+    payload[QUESTIONS[i-1].key] = answers[i] ? answers[i].label : '';
+  }
 
   // Use a Blob with JSON type — this keeps it a simple CORS request (no preflight)
   // while sending proper JSON that Make can parse into individual fields
