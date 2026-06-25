@@ -31,7 +31,12 @@ src="https://www.facebook.com/tr?id=1550508203129868&ev=PageView&noscript=1"/></
 window.dataLayer=window.dataLayer||[];
 function gtag(){dataLayer.push(arguments);}
 gtag('js',new Date());
-gtag('config','G-5GHLP06H0G',{send_page_view:true,page_title:'Kringstar Qualification Form'});
+gtag('config','G-5GHLP06H0G',{
+  send_page_view: true,
+  page_title: 'Kringstar Qualification Form',
+  cookie_domain: 'kristoferkings6-dot.github.io',
+  cookie_flags: 'SameSite=None;Secure'
+});
 function kga(n,p){try{gtag('event',n,p||{});}catch(e){}}
 </script>
 
@@ -142,11 +147,11 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
 
 <script>
 var WEBHOOK = 'https://hook.us2.make.com/gh8hqll4kdltuyk1eg52zk567w1n8f1g';
-var BUDGET_QUALIFY_FROM = 0;
+var BUDGET_QUALIFY_FROM = 1;
 
 var BUDGET_OPTIONS = [
-  { label: 'Below 20,000,000' },
-  { label: '20,000,000 to 50,000,000' },
+  { label: 'Below 23,000,000' },
+  { label: '23,000,000 to 50,000,000' },
   { label: '50,000,000 to 100,000,000' },
   { label: '100,000,000 to 200,000,000' },
   { label: '200,000,000 to 500,000,000' },
@@ -173,8 +178,25 @@ var QUESTIONS = [
     hint: 'Including all fees and charges. All responses are strictly confidential.',
     options: buildBudgetOptions()
   },
+  <!-- Q2- Location -->
+<div id="q-location" class="step">
+  <div class="q-num">Stage 3 of 4 — Property Match · Question 1 of 3</div>
+  <div class="q-text">Which area of Lagos are you focused on?</div>
+  <div class="q-hint">Bamidele specialises in verified properties across key Lagos corridors.</div>
+  <div class="opts" id="opts-location">
+    <button class="opt" onclick="pickLocation('Ajah / Sangotedo / Awoyaya', this)"><div class="radio"></div>Ajah / Sangotedo / Awoyaya</button>
+    <button class="opt" onclick="pickLocation('Lekki / Victoria Island / Ikoyi', this)"><div class="radio"></div>Lekki / Victoria Island / Ikoyi</button>
+    <button class="opt" onclick="pickLocation('Ikeja / Maryland / Magodo', this)"><div class="radio"></div>Ikeja / Maryland / Magodo</button>
+    <button class="opt" onclick="pickLocation('Abuja / Port Harcourt / Other', this)"><div class="radio"></div>Abuja / Port Harcourt / Other</button>
+    <button class="opt" onclick="pickLocation('Open to suggestions', this)"><div class="radio"></div>Open to suggestions</button>
+  </div>
+  <div class="nav">
+    <button class="btn-back" onclick="goToLastQuestion()">← Back</button>
+    <button class="btn-next" id="btn-location" disabled onclick="goToContact()">Continue →</button>
+  </div>
+</div>
 
-  // Q2 - Purchase timeline
+  // Q3 - Purchase timeline
   {
     key: 'purchase_timeline',
     text: 'When are you looking to complete this purchase?',
@@ -187,7 +209,7 @@ var QUESTIONS = [
     ]
   },
 
-  // Q3 - Funding method
+  // Q4 - Funding method
   {
     key: 'funding_method',
     text: 'How are you planning to fund this purchase?',
@@ -201,7 +223,7 @@ var QUESTIONS = [
     ]
   },
 
-  // Q4 - Proof of funds (verification signal)
+  // Q5 - Proof of funds (verification signal)
   {
     key: 'proof_of_funds',
     text: 'To protect you and ensure only serious buyers access our listings  -  can you provide proof of funds?',
@@ -213,7 +235,7 @@ var QUESTIONS = [
     ]
   },
 
-  // Q5 - Readiness to meet Bamidele
+  // Q6 - Readiness to meet Bamidele
   {
     key: 'readiness_to_speak',
     text: 'Are you ready to speak with Bamidele Adewale  -  our verified Lagos property agent  -  this week?',
@@ -225,7 +247,7 @@ var QUESTIONS = [
     ]
   },
 
-  // Q6 - Biggest frustration  -  mirrors ad angle, personalises follow-up
+  // Q7 - Biggest frustration  -  mirrors ad angle, personalises follow-up
   {
     key: 'biggest_frustration',
     text: 'What has been your biggest frustration searching for property in Lagos?',
@@ -424,22 +446,21 @@ function submitForm() {
   }
   fd.append('submitted_at', new Date().toISOString());
 
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', WEBHOOK, true);
-  xhr.onload = function() {
-    var el = document.getElementById('send-status');
-    if (el) el.textContent = 'Your details have been submitted successfully.';
-    var btn = document.getElementById('restart-btn');
-    if (btn) btn.disabled = false;
-  };
-  xhr.onerror = function() {
-    var el = document.getElementById('send-status');
-    if (el) el.textContent = 'Your details have been submitted successfully.';
-    fetch(WEBHOOK, { method: 'POST', mode: 'no-cors', body: fd }).catch(function(){});
-    var btn = document.getElementById('restart-btn');
-    if (btn) btn.disabled = false;
-  };
-  xhr.send(fd);
+ fetch(WEBHOOK, {
+  method: 'POST',
+  mode: 'no-cors',
+  body: fd
+}).then(function() {
+  var el = document.getElementById('r-status');
+  if (el) el.textContent = 'Your details have been submitted successfully.';
+  var btn = document.getElementById('restart-btn');
+  if (btn) btn.disabled = false;
+}).catch(function() {
+  var el = document.getElementById('r-status');
+  if (el) el.textContent = 'Your details have been submitted successfully.';
+  var btn = document.getElementById('restart-btn');
+  if (btn) btn.disabled = false;
+});
 }
 
 function restart() {
