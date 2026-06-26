@@ -316,6 +316,7 @@ var clientName = 'Bamidele';
   html += '</div></div>';
 
   card.innerHTML = html;
+  kga('quiz_started', { client: clientName });
   // Initialise progress bar for step 1 on page load
   setProgress(1);
 })();
@@ -352,6 +353,7 @@ function pick(stepNum, optIdx, el) {
 
 function goNext(current) {
   if (!answers[current]) return;
+  kga('question_' + current + '_completed', { client: clientName, answer: answers[current].label });
   if (current === TOTAL_Q) {
     kga('all_questions_complete', { client: clientName });
     try { fbq('trackCustom', 'AllQuestionsComplete'); } catch(e) {}
@@ -398,7 +400,7 @@ function submitForm() {
   contact.name  = nameEl.value.trim();
   contact.phone = phoneEl.value.trim();
   contact.email = emailEl.value.trim();
-
+kga('contact_details_entered', { client: clientName });
   var status      = calcQualification();
   var isQualified = status === 'Qualified';
 
